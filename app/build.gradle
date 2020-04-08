@@ -35,7 +35,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     //MVVMHabit
-    implementation project(':mvvmhabit')
+    implementation project(':mvvmwill')
 //    implementation rootProject.ext.dependencies.MVVMHabit
     //内存泄漏测试
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
