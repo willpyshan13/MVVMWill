@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
+import com.goldze.mvvmhabit.data.DemoRepository;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
@@ -21,7 +22,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  * Created by goldze on 2018/7/18.
  */
 
-public class ViewPagerViewModel extends BaseViewModel {
+public class ViewPagerViewModel extends BaseViewModel<DemoRepository> {
     public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent<>();
     public ViewPagerViewModel(@NonNull Application application) {
         super(application);

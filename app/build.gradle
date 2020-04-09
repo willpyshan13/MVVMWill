@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -11,10 +14,12 @@ android {
     }
     buildTypes {
         release {
+            multiDexEnabled true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            multiDexEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -38,6 +43,13 @@ dependencies {
     implementation project(':mvvmwill')
 //    implementation rootProject.ext.dependencies.MVVMHabit
     //内存泄漏测试
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    compile 'com.android.support:multidex:1.0.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

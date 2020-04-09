@@ -1,10 +1,12 @@
 package com.goldze.mvvmhabit.app;
 
+import androidx.multidex.MultiDex;
+
 import com.goldze.mvvmhabit.BuildConfig;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.ui.login.LoginActivity;
-import com.squareup.leakcanary.LeakCanary;
 
+import leakcanary.LeakCanary;
 import me.goldze.mvvmhabit.base.BaseApplication;
 import me.goldze.mvvmhabit.crash.CaocConfig;
 import me.goldze.mvvmhabit.utils.KLog;
@@ -19,12 +21,10 @@ public class AppApplication extends BaseApplication {
         super.onCreate();
         //是否开启打印日志
         KLog.init(BuildConfig.DEBUG);
+        MultiDex.install(this);
         //初始化全局异常崩溃
         initCrash();
         //内存泄漏检测
-        if (!LeakCanary.isInAnalyzerProcess(this)) {
-            LeakCanary.install(this);
-        }
     }
 
     private void initCrash() {
