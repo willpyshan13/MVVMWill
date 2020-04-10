@@ -1,4 +1,4 @@
-1、kotlin 协程+okhttp+retofit
+1、mvvm kotlin 协程+okhttp+retofit +jetpack
 2、基于asm的权限请求
 3、列表
 4、图片选择器
