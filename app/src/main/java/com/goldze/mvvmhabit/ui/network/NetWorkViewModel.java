@@ -110,7 +110,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                         //清除列表
                         observableList.clear();
                         //请求成功
-                        if (response.getCode() == 1) {
+                        if (response.code == 1) {
                             for (DemoEntity.ItemsEntity entity : response.getResult().getItems()) {
                                 NetWorkItemViewModel itemViewModel = new NetWorkItemViewModel(NetWorkViewModel.this, entity);
                                 //双向绑定动态添加Item
