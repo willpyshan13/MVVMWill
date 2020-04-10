@@ -17,9 +17,12 @@ class MultiRecycleRightItemViewModel(viewModel: MultiRecycleViewModel, text: Str
 
     //条目的点击事件
     @JvmField
-    var itemClick: BindingCommand<*> = BindingCommand<Any?>(BindingAction { //拿到position
-        val position = viewModel.observableList.indexOf(this@MultiRecycleRightItemViewModel)
-        ToastUtils.showShort("position：$position")
+    var itemClick: BindingCommand<*> = BindingCommand<Any?>(object : BindingAction {
+        override fun call() {
+            //拿到position
+            val position = viewModel.observableList.indexOf(this@MultiRecycleRightItemViewModel)
+            ToastUtils.showShort("position：$position")
+        }
     })
 
     init {
