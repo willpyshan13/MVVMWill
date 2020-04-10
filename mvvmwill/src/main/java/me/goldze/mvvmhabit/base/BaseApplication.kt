@@ -31,7 +31,7 @@ open class BaseApplication : Application() {
             //注册监听每个activity的生命周期,便于堆栈式管理
             application.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
                 override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                    AppManager.getAppManager().addActivity(activity)
+                    AppManager.appManager?.addActivity(activity)
                 }
 
                 override fun onActivityStarted(activity: Activity) {}
@@ -40,7 +40,7 @@ open class BaseApplication : Application() {
                 override fun onActivityStopped(activity: Activity) {}
                 override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {}
                 override fun onActivityDestroyed(activity: Activity) {
-                    AppManager.getAppManager().removeActivity(activity)
+                    AppManager.appManager?.removeActivity(activity)
                 }
             })
         }
