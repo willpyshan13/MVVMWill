@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.entity.SpinnerItemData;
+import com.goldze.mvvmhabit.repository.AppRepository;
 import com.goldze.mvvmhabit.ui.base.viewmodel.ToolbarViewModel;
 import com.google.gson.Gson;
 
@@ -25,7 +26,7 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
  * Created by goldze on 2017/7/17.
  */
 
-public class FormViewModel extends ToolbarViewModel {
+public class FormViewModel extends ToolbarViewModel<AppRepository> {
     public FormEntity entity;
 
     public List<IKeyAndValue> sexItemDatas;

@@ -1,12 +1,10 @@
 package me.goldze.mvvmhabit.base
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
@@ -20,7 +18,7 @@ import java.lang.reflect.ParameterizedType
 /**
  * @author will
  */
-abstract class BaseActivity<V : ViewDataBinding?, VM : BaseViewModel<*>?> : RxAppCompatActivity(), IBaseView {
+abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : RxAppCompatActivity(), IBaseView {
     @JvmField
     protected var binding: V? = null
     @JvmField
@@ -60,7 +58,7 @@ abstract class BaseActivity<V : ViewDataBinding?, VM : BaseViewModel<*>?> : RxAp
      */
     private fun initViewDataBinding(savedInstanceState: Bundle?) {
         //DataBindingUtil类需要在project的build中配置 dataBinding {enabled true }, 同步后会自动关联android.databinding包
-        binding = DataBindingUtil.setContentView(this as Activity, initContentView(savedInstanceState))
+        binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState))
         viewModelId = initVariableId()
         viewModel = initViewModel()
         if (viewModel == null) {

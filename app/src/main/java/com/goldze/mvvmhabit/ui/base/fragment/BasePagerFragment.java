@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentBasePagerBinding;
+import com.goldze.mvvmhabit.repository.AppRepository;
 import com.goldze.mvvmhabit.ui.base.adapter.BaseFragmentPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -22,7 +23,7 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
  * 抽取的二级BasePagerFragment
  */
 
-public abstract class BasePagerFragment extends BaseFragment<FragmentBasePagerBinding, BaseViewModel> {
+public abstract class BasePagerFragment extends BaseFragment<FragmentBasePagerBinding, BaseViewModel<AppRepository>> {
 
     private List<Fragment> mFragments;
     private List<String> titlePager;

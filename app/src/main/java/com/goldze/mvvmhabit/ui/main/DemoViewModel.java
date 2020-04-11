@@ -4,10 +4,11 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
+import com.goldze.mvvmhabit.repository.AppRepository;
 import com.goldze.mvvmhabit.ui.form.FormFragment;
 import com.goldze.mvvmhabit.ui.network.NetWorkFragment;
 import com.goldze.mvvmhabit.ui.rv_multi.MultiRecycleViewFragment;
-import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
+//import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
 import com.goldze.mvvmhabit.ui.viewpager.activity.ViewPagerActivity;
 import com.goldze.mvvmhabit.ui.vp_frg.ViewPagerGroupFragment;
 
@@ -21,7 +22,7 @@ import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
  * Created by goldze on 2017/7/17.
  */
 
-public class DemoViewModel extends BaseViewModel {
+public class DemoViewModel extends BaseViewModel<AppRepository> {
     //使用Observable
     public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();
     //使用LiveData
@@ -49,7 +50,7 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand startTabBarClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            startActivity(TabBarActivity.class);
+//            startActivity(TabBarActivity.class);
         }
     });
     //ViewPager绑定

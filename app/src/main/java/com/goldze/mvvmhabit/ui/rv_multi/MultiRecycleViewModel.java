@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
+import com.goldze.mvvmhabit.repository.AppRepository;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
@@ -19,7 +20,7 @@ import me.tatarka.bindingcollectionadapter2.OnItemBind;
  * Description：
  */
 
-public class MultiRecycleViewModel extends BaseViewModel {
+public class MultiRecycleViewModel extends BaseViewModel<AppRepository> {
     private static final String MultiRecycleType_Head = "head";
     private static final String MultiRecycleType_Left = "left";
     private static final String MultiRecycleType_Right = "right";

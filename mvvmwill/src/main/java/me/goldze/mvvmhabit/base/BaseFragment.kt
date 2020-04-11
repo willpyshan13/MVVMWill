@@ -21,7 +21,7 @@ import java.lang.reflect.ParameterizedType
 /**
  * @author will
  */
-abstract class BaseFragment<V : ViewDataBinding?, VM : BaseViewModel<*>?> : RxFragment(), IBaseView {
+abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFragment(), IBaseView {
     @JvmField
     protected var binding: V? = null
     @JvmField

@@ -3,6 +3,7 @@ package com.goldze.mvvmhabit.ui.network.detail;
 import android.app.Application;
 
 import com.goldze.mvvmhabit.entity.DemoEntity;
+import com.goldze.mvvmhabit.repository.AppRepository;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
@@ -12,7 +13,7 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
  * Created by goldze on 2017/7/17.
  */
 
-public class DetailViewModel extends BaseViewModel {
+public class DetailViewModel extends BaseViewModel<AppRepository> {
     public ObservableField<DemoEntity.ItemsEntity> entity = new ObservableField<>();
 
     public DetailViewModel(@NonNull Application application) {
