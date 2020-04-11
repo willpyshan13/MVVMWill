@@ -18,7 +18,7 @@ object LineManagers {
     fun horizontal(): LineManagerFactory {
         return object : LineManagerFactory {
             override fun create(recyclerView: RecyclerView): ItemDecoration {
-                return com.will.habit.binding.viewadapter.recyclerview.DividerLine(recyclerView.context, com.will.habit.binding.viewadapter.recyclerview.DividerLine.LineDrawMode.HORIZONTAL)
+                return DividerLine(recyclerView.context, DividerLine.LineDrawMode.HORIZONTAL)
             }
         }
     }
@@ -26,7 +26,7 @@ object LineManagers {
     fun vertical(): LineManagerFactory {
         return object : LineManagerFactory {
             override fun create(recyclerView: RecyclerView): ItemDecoration {
-                return com.will.habit.binding.viewadapter.recyclerview.DividerLine(recyclerView.context, com.will.habit.binding.viewadapter.recyclerview.DividerLine.LineDrawMode.VERTICAL)
+                return DividerLine(recyclerView.context, DividerLine.LineDrawMode.VERTICAL)
             }
         }
     }
