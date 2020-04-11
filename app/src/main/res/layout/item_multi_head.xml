@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.rv_multi.MultiRecycleHeadViewModel" />
+        <import type="com.will.habit.ui.rv_multi.MultiRecycleHeadViewModel" />
 
         <variable
             name="viewModel"

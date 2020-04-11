@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.form.FormViewModel" />
+        <import type="com.will.habit.ui.form.FormViewModel" />
 
         <variable
             name="viewModel"
-            type="com.goldze.mvvmhabit.ui.form.FormViewModel" />
+            type="com.will.habit.ui.form.FormViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

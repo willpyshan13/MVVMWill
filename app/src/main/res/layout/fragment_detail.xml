@@ -3,13 +3,13 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.network.detail.DetailViewModel" />
+        <import type="com.will.habit.ui.network.detail.DetailViewModel" />
 
         <variable
                 name="viewModel"
-                type="com.goldze.mvvmhabit.ui.network.detail.DetailViewModel"
+                type="com.will.habit.ui.network.detail.DetailViewModel"
                 />
-        <import type="com.goldze.mvvmhabit.R" />
+        <import type="com.will.habit.R" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="me.goldze.mvvmhabit.base.BaseViewModel" />
+        <import type="com.will.habit.base.BaseViewModel" />
 
         <variable
             name="viewModel"
-            type="BaseViewModel" />
+            type="com.will.habit.base.BaseViewModel" />
 
     </data>
 

@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.network.NetWorkItemViewModel" />
+        <import type="com.will.habit.ui.network.NetWorkItemViewModel" />
 
         <variable
             name="viewModel"
-            type="com.goldze.mvvmhabit.ui.network.NetWorkItemViewModel" />
+            type="com.will.habit.ui.network.NetWorkItemViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

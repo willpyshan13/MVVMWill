@@ -3,9 +3,9 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel" />
+        <import type="com.will.habit.ui.viewpager.vm.ViewPagerViewModel" />
 
-        <import type="com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter" />
+        <import type="com.will.habit.ui.viewpager.adapter.ViewPagerBindingAdapter" />
 
         <variable
             name="viewModel"

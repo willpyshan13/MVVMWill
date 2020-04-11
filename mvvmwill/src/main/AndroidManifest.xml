@@ -5,14 +5,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application>
         <activity
-            android:name=".base.ContainerActivity"
+            android:name="com.will.habit.base.base.ContainerActivity"
             android:configChanges="orientation|keyboardHidden"></activity>
         <activity
-            android:name=".crash.DefaultErrorActivity"
+            android:name="com.will.habit.crash.DefaultErrorActivity"
             android:process=":error_activity" />
 
         <provider
-            android:name=".crash.CaocInitProvider"
+            android:name="com.will.habit.crash.CaocInitProvider"
             android:authorities="${applicationId}.customactivityoncrashinitprovider"
             android:exported="false"
             android:initOrder="101" />

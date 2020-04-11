@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.network.NetWorkViewModel" />
+        <import type="com.will.habit.ui.network.NetWorkViewModel" />
 
         <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
 
@@ -15,9 +15,6 @@
             name="adapter"
             type="BindingRecyclerViewAdapter" />
 
-        <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LayoutManagers" />
-
-        <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,8 +38,7 @@
                 binding:adapter="@{adapter}"
                 binding:itemBinding="@{viewModel.itemBinding}"
                 binding:items="@{viewModel.observableList}"
-                binding:layoutManager="@{LayoutManagers.linear()}"
-                binding:lineManager="@{LineManagers.horizontal()}" />
+                binding:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 

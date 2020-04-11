@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="me.goldze.mvvmhabit.base.BaseViewModel" />
+            type="com.will.habit.base.BaseViewModel" />
     </data>
 
     <LinearLayout
