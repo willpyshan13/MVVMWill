@@ -1,4 +1,4 @@
-package com.will.habit.widget.widget;
+package com.will.habit.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
