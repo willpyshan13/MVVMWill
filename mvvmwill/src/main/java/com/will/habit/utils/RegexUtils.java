@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.will.habit.utils.constant.constant.RegexConstants;
+import com.will.habit.utils.constant.RegexConstants;
 
 /**
  * Created by goldze on 2017/6/19.

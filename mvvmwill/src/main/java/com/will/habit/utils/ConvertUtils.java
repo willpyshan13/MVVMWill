@@ -17,11 +17,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-import com.will.habit.utils.constant.constant.MemoryConstants;
-import com.will.habit.utils.constant.constant.TimeConstants;
+import com.will.habit.utils.constant.MemoryConstants;
+import com.will.habit.utils.constant.TimeConstants;
 
 /**
- * Created by goldze on 2017/5/14.
+ * @author will
  * 转换相关工具类
  */
 public final class ConvertUtils {

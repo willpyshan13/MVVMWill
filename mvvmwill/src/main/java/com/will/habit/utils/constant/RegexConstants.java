@@ -1,4 +1,4 @@
-package com.will.habit.utils.constant.constant;
+package com.will.habit.utils.constant;
 
 /**
  * Created by goldze on 2017/5/14.
