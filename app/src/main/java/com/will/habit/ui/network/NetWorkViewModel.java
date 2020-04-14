@@ -129,7 +129,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                         //请求刷新完成收回
                         uc.finishRefreshing.call();
                         if (throwable instanceof ResponseThrowable) {
-                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+//                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }
                     }
                 }, new Action() {
