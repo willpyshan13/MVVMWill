@@ -248,6 +248,7 @@ class SPUtils private constructor(spName: String) {
          * @param spName sp名
          * @return [SPUtils]
          */
+        
         fun getInstance(spName: String): SPUtils {
             var spName = spName
             if (isSpace(spName)) spName = "spUtils"
