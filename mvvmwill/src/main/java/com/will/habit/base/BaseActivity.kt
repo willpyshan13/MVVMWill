@@ -2,6 +2,7 @@ package com.will.habit.base
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity

@@ -163,7 +163,7 @@ object CustomActivityOnCrash {
                     application!!.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
                         var currentlyStartedActivities = 0
                         var dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-                        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {
+                        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                             if (activity.javaClass != config.getErrorActivityClass()) {
                                 // Copied from ACRA:
                                 // Ignore activityClass because we want the last
