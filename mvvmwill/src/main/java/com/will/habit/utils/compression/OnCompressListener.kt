@@ -1,21 +1,20 @@
-package com.will.habit.utils.compression;
+package com.will.habit.utils.compression
 
-import java.io.File;
+import java.io.File
 
-public interface OnCompressListener {
-
+interface OnCompressListener {
     /**
      * Fired when the compression is started, override to handle in your own code
      */
-    void onStart();
+    fun onStart()
 
     /**
      * Fired when a compression returns successfully, override to handle in your own code
      */
-    void onSuccess(File file);
+    fun onSuccess(file: File?)
 
     /**
      * Fired when a compression fails to complete, override to handle in your own code
      */
-    void onError(Throwable e);
+    fun onError(e: Throwable?)
 }
