@@ -189,6 +189,7 @@ class ToastUtils private constructor() {
          *
          * @param text 文本
          */
+        @JvmStatic
         fun showShort(text: CharSequence) {
             show(text, Toast.LENGTH_SHORT)
         }
@@ -227,6 +228,7 @@ class ToastUtils private constructor() {
          *
          * @param text 文本
          */
+        @JvmStatic
         fun showLong(text: CharSequence) {
             show(text, Toast.LENGTH_LONG)
         }
@@ -236,6 +238,7 @@ class ToastUtils private constructor() {
          *
          * @param resId 资源Id
          */
+        @JvmStatic
         fun showLong(@StringRes resId: Int) {
             show(resId, Toast.LENGTH_LONG)
         }
