@@ -17,6 +17,7 @@ import com.will.habit.bus.event.SingleLiveEvent
 import com.will.habit.extection.launch
 import com.will.habit.repository.PhoneRepository
 import com.will.habit.utils.ToastUtils
+import com.will.habit.utils.ToastUtils.Companion.showShort
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -94,7 +95,7 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
             }
         }, {
             uc.endPhoneCall.call()
-            ToastUtils.showShort("获取失败")
+            Toast.makeText(BaseApplication.instance,"请在pc端创建任务",Toast.LENGTH_SHORT).show()
         })
     }
 
