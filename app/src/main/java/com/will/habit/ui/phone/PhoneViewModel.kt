@@ -46,6 +46,9 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
 
         //拨打电话
         var phoneCall = SingleLiveEvent<Boolean>()
+
+        //拨打电话
+        var endPhoneCall = SingleLiveEvent<Boolean>()
     }
 
     //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
@@ -68,7 +71,7 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
     /**
      * 网络模拟一个登陆操作
      */
-    private fun login() {
+    fun login() {
 //        uc.phoneCall.call()
         launch({
             val tm = BaseApplication.instance?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
@@ -79,11 +82,14 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
             val simState = tm.simState
             val data = model?.querySyncWithContext(tel.replace("+86",""))
             if (data?.data?.data != null){
-                val list = data?.data?.data.map { it.system_user_mobile }
+                val list = data?.data?.data.map { it.mobile }
                 phoneList.set(list)
                 uc.phoneCall.call()
+            }else{
+                uc.endPhoneCall.call()
             }
         }, {
+            uc.endPhoneCall.call()
             ToastUtils.showShort("获取失败")
         })
     }
