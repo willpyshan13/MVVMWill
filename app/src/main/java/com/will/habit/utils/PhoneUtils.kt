@@ -2,8 +2,10 @@ package com.will.habit.utils
 
 import android.content.Context
 import android.os.IBinder
+import android.telecom.TelecomManager
 import android.util.Log
 import com.android.internal.telephony.ITelephony
+
 
 /**
  * Desc:
@@ -19,8 +21,16 @@ import com.android.internal.telephony.ITelephony
  */
 object PhoneUtils {
     @JvmStatic
-    fun rejectCall() {
+    fun rejectCall(context:Context) {
         try {
+
+            val tm = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+
+            if (tm != null) {
+                val success = tm.endCall()
+                // success == true if call was terminated.
+            }
+
             val method = Class.forName("android.os.ServiceManager")
                     .getMethod("getService", String::class.java)
             val binder = method.invoke(null, *arrayOf<Any>(Context.TELEPHONY_SERVICE)) as IBinder

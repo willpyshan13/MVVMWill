@@ -66,7 +66,7 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
                 val imei = tm.simSerialNumber
                 val imsi = tm.subscriberId
                 val simState = tm.simState
-                PhoneUtils.rejectCall()
+                PhoneUtils.rejectCall(this@PhoneActivity)
             }
         })
     }
