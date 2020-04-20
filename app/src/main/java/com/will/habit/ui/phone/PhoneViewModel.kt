@@ -80,12 +80,16 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
             val imei = tm.simSerialNumber
             val imsi = tm.subscriberId
             val simState = tm.simState
-            val data = model?.querySyncWithContext(tel.replace("+86",""))
-            if (data?.data?.data != null){
-                val list = data?.data?.data.map { it.mobile }
+            val data = model?.querySyncWithContext(tel.replace("+86", ""))
+            if (data?.data?.data != null) {
+                val list = data.data.data.map { it.mobile }
                 phoneList.set(list)
-                uc.phoneCall.call()
-            }else{
+                if (list.isEmpty()){
+                    uc.endPhoneCall.call()
+                }else{
+                    uc.phoneCall.call()
+                }
+            } else {
                 uc.endPhoneCall.call()
             }
         }, {

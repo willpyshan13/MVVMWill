@@ -83,6 +83,10 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
         })
         viewModel!!.uc.endPhoneCall.observe(this, Observer {
             startCalling = false
+            Observable.just("").delay(3, TimeUnit.SECONDS)
+                    .subscribe(Consumer {
+                        viewModel?.login()
+                    })
         })
     }
 }
