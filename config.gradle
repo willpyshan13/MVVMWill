@@ -34,6 +34,8 @@ ext {
             //rx系列与View生命周期同步
             "rxlifecycle"                          : "com.trello.rxlifecycle2:rxlifecycle:2.2.2",
             "rxlifecycle-components"               : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.2",
+            "lifecycle-ktx"                        : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha02",
+            "lifecycle-extensions"                 : 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02',
             //rxbinding
             "rxbinding"                            : "com.jakewharton.rxbinding2:rxbinding:2.1.1",
             //rx 6.0权限请求

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.will.habit.data.DemoRepository;
+import com.will.habit.repository.PhoneRepository;
 import com.will.habit.ui.login.LoginViewModel;
 import com.will.habit.ui.network.NetWorkViewModel;
 import com.will.habit.ui.phone.PhoneViewModel;
@@ -19,8 +20,9 @@ import androidx.lifecycle.ViewModelProvider;
 public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @SuppressLint("StaticFieldLeak")
     private static volatile AppViewModelFactory INSTANCE;
-    private final Application mApplication;
-    private final DemoRepository mRepository;
+    private Application mApplication = null;
+    private DemoRepository mRepository =null;
+    private final PhoneRepository phoneRepository = new PhoneRepository();
 
     public static AppViewModelFactory getInstance(Application application) {
         if (INSTANCE == null) {
@@ -51,7 +53,7 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             return (T) new LoginViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(PhoneViewModel.class)) {
-            return (T) new PhoneViewModel(mApplication, mRepository);
+            return (T) new PhoneViewModel(mApplication, phoneRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

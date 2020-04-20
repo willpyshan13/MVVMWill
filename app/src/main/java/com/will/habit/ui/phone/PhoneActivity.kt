@@ -35,13 +35,20 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
     override fun onResume() {
         super.onResume()
         if (startCalling) {
-            startCalling("15980957597")
+            if (viewModel!=null&&viewModel!!.phoneList.get()!=null) {
+                if (currentPosition < viewModel!!.phoneList.get()!!.size) {
+                    startCalling(viewModel!!.phoneList.get()!![currentPosition])
+                    currentPosition++
+                }else{
+                    //
+                }
+            }
         }
     }
 
     private fun startCalling(number:String){
         currentPosition++
-        TelephoneUtils.callPhone("number", this@PhoneActivity)
+        TelephoneUtils.callPhone(number, this@PhoneActivity)
         Observable.just("").delay(7, TimeUnit.SECONDS)
                 .subscribe(Consumer {
                     TelephoneUtils.endCall(this@PhoneActivity)
@@ -81,14 +88,6 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
 
         viewModel!!.uc.phoneCall.observe(this, Observer {
             rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
-//                val tm = this@PhoneActivity.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-//                val deviceid = tm.deviceId //获取ID号
-//                val tel = tm.line1Number //手机号码
-//                val imei = tm.simSerialNumber
-//                val imsi = tm.subscriberId
-//                val simState = tm.simState
-//                PhoneUtils.rejectCall(this@PhoneActivity)
-//                TelephoneUtils.endCall(this@PhoneActivity)
                 startCalling
             }
         })

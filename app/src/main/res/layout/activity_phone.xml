@@ -65,8 +65,7 @@
                     android:text="@={viewModel.userName}"
                     android:textColor="@color/textColor"
                     android:textColorHint="@color/textColorHint"
-                    android:textSize="16sp"
-                    binding:onFocusChangeCommand="@{viewModel.onFocusChangeCommand}" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="30dp"
@@ -117,8 +116,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="6dp"
-                    android:src="@mipmap/show_psw_press"
-                    binding:onClickCommand="@{viewModel.passwordShowSwitchOnClickCommand}" />
+                    android:src="@mipmap/show_psw_press" />
             </LinearLayout>
 
             <RelativeLayout
