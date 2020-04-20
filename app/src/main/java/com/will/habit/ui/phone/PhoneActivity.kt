@@ -1,9 +1,7 @@
 package com.will.habit.ui.phone
 
 import android.Manifest
-import android.content.Context
 import android.os.Bundle
-import android.telephony.TelephonyManager
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import androidx.lifecycle.Observer
@@ -14,7 +12,10 @@ import com.will.habit.R
 import com.will.habit.app.AppViewModelFactory
 import com.will.habit.base.BaseActivity
 import com.will.habit.databinding.ActivityPhoneBinding
-import com.will.habit.utils.PhoneUtils
+import com.will.habit.utils.TelephoneUtils
+import io.reactivex.Observable
+import io.reactivex.functions.Consumer
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -22,9 +23,29 @@ import com.will.habit.utils.PhoneUtils
  */
 class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
     //ActivityLoginBinding类是databinding框架自定生成的,对应activity_login.xml
-    var rxPermissions : RxPermissions? = null
+    var rxPermissions: RxPermissions? = null
     override fun initContentView(savedInstanceState: Bundle?): Int {
         return R.layout.activity_phone
+    }
+
+    var currentPosition = 0
+
+    var startCalling = false
+
+    override fun onResume() {
+        super.onResume()
+        if (startCalling) {
+            startCalling("15980957597")
+        }
+    }
+
+    private fun startCalling(number:String){
+        currentPosition++
+        TelephoneUtils.callPhone("number", this@PhoneActivity)
+        Observable.just("").delay(7, TimeUnit.SECONDS)
+                .subscribe(Consumer {
+                    TelephoneUtils.endCall(this@PhoneActivity)
+                })
     }
 
     override fun initData() {
@@ -59,14 +80,16 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
         })
 
         viewModel!!.uc.phoneCall.observe(this, Observer {
-            rxPermissions?.request(Manifest.permission.READ_PHONE_STATE,Manifest.permission.CALL_PHONE)?.subscribe {
-                val tm = this@PhoneActivity.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                val deviceid = tm.deviceId //获取ID号
-                val tel = tm.line1Number //手机号码
-                val imei = tm.simSerialNumber
-                val imsi = tm.subscriberId
-                val simState = tm.simState
-                PhoneUtils.rejectCall(this@PhoneActivity)
+            rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
+//                val tm = this@PhoneActivity.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+//                val deviceid = tm.deviceId //获取ID号
+//                val tel = tm.line1Number //手机号码
+//                val imei = tm.simSerialNumber
+//                val imsi = tm.subscriberId
+//                val simState = tm.simState
+//                PhoneUtils.rejectCall(this@PhoneActivity)
+//                TelephoneUtils.endCall(this@PhoneActivity)
+                startCalling
             }
         })
     }

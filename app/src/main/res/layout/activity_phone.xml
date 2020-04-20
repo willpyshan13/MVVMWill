@@ -30,6 +30,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
+                android:visibility="invisible"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/logo" />
 
@@ -39,6 +40,7 @@
                 android:layout_marginTop="34dp"
                 android:background="@mipmap/user_edit"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:orientation="horizontal"
                 android:padding="16sp">
 
@@ -81,6 +83,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@mipmap/user_edit"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:orientation="horizontal"
                 android:padding="16sp">
 
@@ -121,6 +124,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:layout_marginTop="8dp">
 
                 <TextView
@@ -145,7 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
-                    android:text="登录"
+                    android:text="开始拨号"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     binding:onClickCommand="@{viewModel.loginOnClickCommand}" />
@@ -154,6 +158,7 @@
             <TextView
                 android:gravity="center"
                 android:layout_width="match_parent"
+                android:visibility="invisible"
                 android:layout_height="wrap_content"
                 android:text="模拟一个登陆操作,随便输入账号密码点击登录即可进入"
                 android:textColor="#EE1010" />

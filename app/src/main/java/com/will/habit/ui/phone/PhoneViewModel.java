@@ -88,37 +88,6 @@ public class PhoneViewModel extends BaseViewModel<DemoRepository> {
      **/
     private void login() {
         uc.phoneCall.call();
-        if (TextUtils.isEmpty(userName.get())) {
-            ToastUtils.showShort("请输入账号！");
-            return;
-        }
-        if (TextUtils.isEmpty(password.get())) {
-            ToastUtils.showShort("请输入密码！");
-            return;
-        }
-        //RaJava模拟登录
-        addSubscribe(model.login()
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showDialog();
-                    }
-                })
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        dismissDialog();
-                        //保存账号密码
-                        model.saveUserName(userName.get());
-                        model.savePassword(password.get());
-                        //进入DemoActivity页面
-                        startActivity(DemoActivity.class);
-                        //关闭页面
-                        finish();
-                    }
-                }));
-
     }
 
     @Override
