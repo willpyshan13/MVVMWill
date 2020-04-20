@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.will.habit.ui.login.LoginActivity">
+        <activity android:name="com.will.habit.ui.phone.PhoneActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,6 +29,19 @@
         <activity android:name="com.will.habit.ui.main.DemoActivity"></activity>
         <activity android:name="com.will.habit.ui.tab_bar.activity.TabBarActivity"></activity>
         <activity android:name="com.will.habit.ui.viewpager.activity.ViewPagerActivity"></activity>
+        <receiver android:name=".receive.PhoneListener">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

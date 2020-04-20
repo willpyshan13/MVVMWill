@@ -6,6 +6,7 @@ import android.app.Application;
 import com.will.habit.data.DemoRepository;
 import com.will.habit.ui.login.LoginViewModel;
 import com.will.habit.ui.network.NetWorkViewModel;
+import com.will.habit.ui.phone.PhoneViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -49,6 +50,8 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new NetWorkViewModel(mApplication, mRepository);
         } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             return (T) new LoginViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(PhoneViewModel.class)) {
+            return (T) new PhoneViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

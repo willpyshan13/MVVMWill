@@ -3,6 +3,8 @@
     package="me.goldze.mvvmhabit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application>
         <activity
             android:name="com.will.habit.base.base.ContainerActivity"
