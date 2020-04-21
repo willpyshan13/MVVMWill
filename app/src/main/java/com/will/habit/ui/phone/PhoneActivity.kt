@@ -1,9 +1,10 @@
 package com.will.habit.ui.phone
 
 import android.Manifest
+import android.content.Context
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
+import android.telephony.TelephonyManager
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -11,6 +12,7 @@ import com.will.habit.BR
 import com.will.habit.R
 import com.will.habit.app.AppViewModelFactory
 import com.will.habit.base.BaseActivity
+import com.will.habit.base.BaseApplication
 import com.will.habit.databinding.ActivityPhoneBinding
 import com.will.habit.utils.TelephoneUtils
 import io.reactivex.Observable
@@ -44,7 +46,7 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
                     startCalling(viewModel!!.phoneList.get()!![currentPosition])
                     currentPosition++
                 }else{
-                    viewModel?.login()
+                    viewModel?.checkPhoneNumber(true)
                 }
             }
         }
@@ -59,9 +61,28 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
                 })
     }
 
+    private fun getPhoneNumber(){
+        rxPermissions?.request(Manifest.permission.READ_PHONE_STATE)?.subscribe {
+            if (it) {
+                val tm = BaseApplication.instance?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                try {
+                    val tel = tm.line1Number //手机号码
+                    viewModel?.phoneNum = tel.replace("+86", "")
+                    viewModel?.checkPhoneNumber(false)
+                }catch (e:Exception){
+                    Toast.makeText(this@PhoneActivity,"没有获取到本机号码 请在sim卡中设置",Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this@PhoneActivity,"请先授权获取号码",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
     override fun initData() {
         super.initData()
         rxPermissions = RxPermissions(this)
+        getPhoneNumber()
     }
 
     override fun initVariableId(): Int {
@@ -85,7 +106,7 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
             startCalling = false
             Observable.just("").delay(3, TimeUnit.SECONDS)
                     .subscribe(Consumer {
-                        viewModel?.login()
+                        viewModel?.checkPhoneNumber(true)
                     })
         })
     }

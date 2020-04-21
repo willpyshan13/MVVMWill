@@ -1,10 +1,6 @@
 package com.will.habit.ui.phone
 
 import android.app.Application
-import android.content.Context
-import android.telephony.TelephonyManager
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
@@ -12,13 +8,9 @@ import com.will.habit.base.BaseApplication
 import com.will.habit.base.BaseViewModel
 import com.will.habit.binding.command.BindingAction
 import com.will.habit.binding.command.BindingCommand
-import com.will.habit.binding.command.BindingConsumer
 import com.will.habit.bus.event.SingleLiveEvent
 import com.will.habit.extection.launch
 import com.will.habit.repository.PhoneRepository
-import com.will.habit.utils.ToastUtils
-import com.will.habit.utils.ToastUtils.Companion.showShort
-import kotlinx.coroutines.CoroutineScope
 
 /**
  *@author will
@@ -33,6 +25,8 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
     var password = ObservableField("")
 
     var phoneList = ObservableField<List<String>>()
+
+    var phoneNum = ""
 
     //用户名清除按钮的显示隐藏绑定
     @JvmField
@@ -52,6 +46,11 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
         var endPhoneCall = SingleLiveEvent<Boolean>()
     }
 
+    override fun onCreate() {
+        super.onCreate()
+
+    }
+
     //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
     @JvmField
     var clearUserNameOnClickCommand: BindingCommand<*> = BindingCommand<Any?>(object : BindingAction {
@@ -65,38 +64,42 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
     @JvmField
     var loginOnClickCommand: BindingCommand<*> = BindingCommand<Any?>(object : BindingAction {
         override fun call() {
-            login()
+            checkPhoneNumber(true)
         }
     })
 
     /**
      * 网络模拟一个登陆操作
      */
-    fun login() {
+    fun checkPhoneNumber(call: Boolean) {
 //        uc.phoneCall.call()
-        launch({
-            val tm = BaseApplication.instance?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            val deviceid = tm.deviceId //获取ID号
-            val tel = tm.line1Number //手机号码
-            val imei = tm.simSerialNumber
-            val imsi = tm.subscriberId
-            val simState = tm.simState
-            val data = model?.querySyncWithContext(tel.replace("+86", ""))
-            if (data?.data?.data != null) {
-                val list = data.data.data.map { it.mobile }
-                phoneList.set(list)
-                if (list.isEmpty()){
-                    uc.endPhoneCall.call()
-                }else{
-                    uc.phoneCall.call()
+        if (phoneNum.isEmpty()) {
+            Toast.makeText(BaseApplication.instance, "没有获取到本机号码 请在sim卡中设置 ", Toast.LENGTH_SHORT).show()
+        } else {
+            launch({
+                val data = model?.querySyncWithContext(phoneNum)
+                if (data?.data?.data != null) {
+                    val list = data.data.data.map { it.mobile }
+                    if (call) {
+                        phoneList.set(list)
+                        if (list.isEmpty()) {
+                            uc.endPhoneCall.call()
+                        } else {
+                            uc.phoneCall.call()
+                        }
+                    }
+                } else {
+                    if (call) {
+                        uc.endPhoneCall.call()
+                    }
                 }
-            } else {
-                uc.endPhoneCall.call()
-            }
-        }, {
-            uc.endPhoneCall.call()
-            Toast.makeText(BaseApplication.instance,"请在pc端创建任务",Toast.LENGTH_SHORT).show()
-        })
+            }, {
+                if (call) {
+                    uc.endPhoneCall.call()
+                }
+
+            })
+        }
     }
 
     override fun onDestroy() {
