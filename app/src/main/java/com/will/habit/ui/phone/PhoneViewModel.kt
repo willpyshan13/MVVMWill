@@ -78,19 +78,28 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
         } else {
             launch({
                 val data = model?.querySyncWithContext(phoneNum)
-                if (data?.data?.data != null) {
-                    val list = data.data.data.map { it.mobile }
-                    if (call) {
-                        phoneList.set(list)
-                        if (list.isEmpty()) {
-                            uc.endPhoneCall.call()
+                if (data!=null) {
+                    if (data.status == 0) {
+                        if (data?.data?.data != null) {
+                            val list = data.data.data.map { it.mobile }
+                            if (call) {
+                                phoneList.set(list)
+                                if (list.isEmpty()) {
+                                    uc.endPhoneCall.call()
+                                } else {
+                                    uc.phoneCall.call()
+                                }
+                            }
                         } else {
-                            uc.phoneCall.call()
+                            if (call) {
+                                uc.endPhoneCall.call()
+                            }
                         }
-                    }
-                } else {
-                    if (call) {
-                        uc.endPhoneCall.call()
+                    }else{
+                        if (call) {
+                            uc.endPhoneCall.call()
+                        }
+                        Toast.makeText(BaseApplication.instance, data.error, Toast.LENGTH_SHORT).show()
                     }
                 }
             }, {
