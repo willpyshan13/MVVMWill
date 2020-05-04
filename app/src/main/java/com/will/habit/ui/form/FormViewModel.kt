@@ -5,14 +5,12 @@ import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableBoolean
 import com.will.habit.entity.FormEntity
-import com.will.habit.entity.SpinnerItemData
 import com.will.habit.repository.AppRepository
 import com.will.habit.ui.base.viewmodel.ToolbarViewModel
 import com.google.gson.Gson
 import com.will.habit.binding.command.BindingAction
 import com.will.habit.binding.command.BindingCommand
 import com.will.habit.binding.command.BindingConsumer
-import com.will.habit.binding.viewadapter.spinner.IKeyAndValue
 import com.will.habit.bus.event.SingleLiveEvent
 import com.will.habit.utils.ToastUtils
 import java.util.*
@@ -22,7 +20,6 @@ import java.util.*
  */
 class FormViewModel(application: Application) : ToolbarViewModel<AppRepository>(application) {
     var entity: FormEntity? = null
-    var sexItemDatas: MutableList<IKeyAndValue>? = null
     var entityJsonLiveData = SingleLiveEvent<String>()
 
     //封装一个界面发生改变的观察者
@@ -41,9 +38,6 @@ class FormViewModel(application: Application) : ToolbarViewModel<AppRepository>(
         super.onCreate()
         uc = UIChangeObservable()
         //sexItemDatas 一般可以从本地Sqlite数据库中取出数据字典对象集合，让该对象实现IKeyAndValue接口
-        sexItemDatas = ArrayList()
-        (sexItemDatas as ArrayList<IKeyAndValue>).add(SpinnerItemData("男", "1"))
-        (sexItemDatas as ArrayList<IKeyAndValue>).add(SpinnerItemData("女", "2"))
     }
 
     /**
@@ -70,16 +64,6 @@ class FormViewModel(application: Application) : ToolbarViewModel<AppRepository>(
             this.entity = entity
         }
     }
-
-    //性别选择的监听
-    var onSexSelectorCommand = BindingCommand(object : BindingConsumer<IKeyAndValue> {
-        override fun call(t: IKeyAndValue) {
-
-        }
-
-    })
-
-
 
     //生日选择的监听
     var onBirClickCommand = BindingCommand<Any>(object : BindingAction {
