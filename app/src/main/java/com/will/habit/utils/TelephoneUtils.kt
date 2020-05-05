@@ -7,6 +7,7 @@ import android.os.Build
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
+import android.view.KeyEvent
 import com.android.internal.telephony.ITelephony
 
 object TelephoneUtils {
@@ -46,7 +47,7 @@ object TelephoneUtils {
                     if (success) {
                     }
                 } catch (e: Exception) {
-                    Log.d("", "success=${e.message}")
+                    Log.d("", "error=${e.message}")
                     e.printStackTrace()
                 }
             }
