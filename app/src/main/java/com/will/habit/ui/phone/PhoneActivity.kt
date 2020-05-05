@@ -111,14 +111,11 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
             }
         })
         viewModel!!.uc.endPhoneCall.observe(this, Observer {
-            rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
-                startCalling = false
-                Observable.just("").delay(3, TimeUnit.SECONDS)
-                        .subscribe(Consumer {
-                            viewModel?.checkPhoneNumber(true)
-                        })
-            }
-
+            startCalling = false
+            Observable.just("").delay(3, TimeUnit.SECONDS)
+                    .subscribe(Consumer {
+                        viewModel?.checkPhoneNumber(true)
+                    })
         })
     }
 }
