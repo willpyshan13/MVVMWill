@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface CallAdapterApiService {
     @GET("api.php/ActivityData")
-    fun getIOSGank(@Query("mobile")number:String): Deferred<RespAppPhoneEntity>
+    fun getIOSGank(@Query("mobile")number:String,@Query("device")device:String): Deferred<RespAppPhoneEntity>
 }
 
 class ApiSource {

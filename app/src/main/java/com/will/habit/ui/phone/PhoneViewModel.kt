@@ -27,7 +27,7 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
     var phoneList = ObservableField<List<String>>()
 
     var phoneNum = ""
-
+    var imei = ""
     //用户名清除按钮的显示隐藏绑定
     @JvmField
     var clearBtnVisibility = ObservableInt()
@@ -72,27 +72,17 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
      * 网络模拟一个登陆操作
      */
     fun checkPhoneNumber(call: Boolean) {
-//        uc.phoneCall.call()
-        if (phoneNum.isEmpty()) {
-            Toast.makeText(BaseApplication.instance, "没有获取到本机号码 请在sim卡中设置 ", Toast.LENGTH_SHORT).show()
-        } else {
             launch({
-                val data = model?.querySyncWithContext(phoneNum)
+                val data = model?.querySyncWithContext(phoneNum,imei)
                 if (data!=null) {
                     if (data.status == 0) {
-                        if (data?.data?.data != null) {
-                            val list = data.data.data.map { it.mobile }
-                            if (call) {
-                                phoneList.set(list)
-                                if (list.isEmpty()) {
-                                    uc.endPhoneCall.call()
-                                } else {
-                                    uc.phoneCall.call()
-                                }
-                            }
-                        } else {
-                            if (call) {
+                        val list = data.data.data.map { it.mobile }
+                        if (call) {
+                            phoneList.set(list)
+                            if (list.isEmpty()) {
                                 uc.endPhoneCall.call()
+                            } else {
+                                uc.phoneCall.call()
                             }
                         }
                     }else{
@@ -108,10 +98,5 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
                 }
 
             })
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

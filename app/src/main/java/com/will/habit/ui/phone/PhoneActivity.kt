@@ -1,6 +1,7 @@
 package com.will.habit.ui.phone
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.telephony.TelephonyManager
@@ -39,20 +40,20 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
         procressPhoneCall()
     }
 
-    private fun procressPhoneCall(){
+    private fun procressPhoneCall() {
         if (startCalling) {
-            if (viewModel!=null&&viewModel!!.phoneList.get()!=null) {
+            if (viewModel != null && viewModel!!.phoneList.get() != null) {
                 if (currentPosition < viewModel!!.phoneList.get()!!.size) {
                     startCalling(viewModel!!.phoneList.get()!![currentPosition])
                     currentPosition++
-                }else{
+                } else {
                     viewModel?.checkPhoneNumber(true)
                 }
             }
         }
     }
 
-    private fun startCalling(number:String){
+    private fun startCalling(number: String) {
         currentPosition++
         TelephoneUtils.callPhone(number, this@PhoneActivity)
         Observable.just("").delay(7, TimeUnit.SECONDS)
@@ -61,19 +62,26 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
                 })
     }
 
-    private fun getPhoneNumber(){
+    @SuppressLint("CheckResult")
+    private fun getPhoneNumber() {
         rxPermissions?.request(Manifest.permission.READ_PHONE_STATE)?.subscribe {
             if (it) {
                 val tm = BaseApplication.instance?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                 try {
                     val tel = tm.line1Number //手机号码
-                    viewModel?.phoneNum = tel.replace("+86", "")
+                    val imei = tm.imei
+                    viewModel?.imei = imei
+                    if (tel.isNotEmpty()) {
+                        viewModel?.phoneNum = tel.replace("+86", "")
+                    } else {
+                        viewModel?.phoneNum = tel
+                    }
                     viewModel?.checkPhoneNumber(false)
-                }catch (e:Exception){
-                    Toast.makeText(this@PhoneActivity,"没有获取到本机号码 请在sim卡中设置",Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(this@PhoneActivity, "没有获取到本机号码 请在sim卡中设置", Toast.LENGTH_SHORT).show()
                 }
-            }else{
-                Toast.makeText(this@PhoneActivity,"请先授权获取号码",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this@PhoneActivity, "请先授权获取号码", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -103,11 +111,14 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
             }
         })
         viewModel!!.uc.endPhoneCall.observe(this, Observer {
-            startCalling = false
-            Observable.just("").delay(3, TimeUnit.SECONDS)
-                    .subscribe(Consumer {
-                        viewModel?.checkPhoneNumber(true)
-                    })
+            rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
+                startCalling = false
+                Observable.just("").delay(3, TimeUnit.SECONDS)
+                        .subscribe(Consumer {
+                            viewModel?.checkPhoneNumber(true)
+                        })
+            }
+
         })
     }
 }

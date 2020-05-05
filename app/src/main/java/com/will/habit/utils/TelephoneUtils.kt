@@ -46,6 +46,7 @@ object TelephoneUtils {
                     if (success) {
                     }
                 } catch (e: Exception) {
+                    Log.d("", "success=${e.message}")
                     e.printStackTrace()
                 }
             }

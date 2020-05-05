@@ -13,10 +13,10 @@ class PhoneRepository : BaseModel() {
     /**
      * 两个请求在子线程中顺序执行，非同时并发
      */
-    suspend fun querySyncWithContext(phoneNumber:String): RespAppPhoneEntity {
+    suspend fun querySyncWithContext(phoneNumber:String,imei:String): RespAppPhoneEntity {
         return withContext(Dispatchers.Main) {
             try {
-                val androidResult = ApiSource.callAdapterInstance.getIOSGank(phoneNumber)
+                val androidResult = ApiSource.callAdapterInstance.getIOSGank(phoneNumber,imei)
                 androidResult.await()
             } catch (e: Throwable) {
                 e.printStackTrace()

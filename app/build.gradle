@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     signingConfigs {
         release {
-            storeFile file('D:\\workspace\\MVVMWill\\app\\will.jks')
+            storeFile file('..\\app\\will.jks')
             storePassword 'will888888'
             keyAlias = 'anan'
             keyPassword 'will888888'
