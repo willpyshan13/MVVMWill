@@ -56,7 +56,7 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
     private fun startCalling(number: String) {
         currentPosition++
         TelephoneUtils.callPhone(number, this@PhoneActivity)
-        Observable.just("").delay(7, TimeUnit.SECONDS)
+        Observable.just("").delay(8500, TimeUnit.MILLISECONDS)
                 .subscribe(Consumer {
                     TelephoneUtils.endCall(this@PhoneActivity)
                 })
