@@ -4,7 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -37,36 +39,46 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
 
     override fun onResume() {
         super.onResume()
+        Log.d("call", "onResume  procressPhoneCall")
         procressPhoneCall()
     }
 
     private fun procressPhoneCall() {
         if (startCalling) {
+            Log.d("call", "procressPhoneCall")
             if (viewModel != null && viewModel!!.phoneList.get() != null) {
                 if (currentPosition < viewModel!!.phoneList.get()!!.size) {
                     startCalling(viewModel!!.phoneList.get()!![currentPosition])
-                    currentPosition++
                 } else {
+                    Log.d("call", "phone list empty get phone list")
                     viewModel?.checkPhoneNumber(true)
                 }
             }
         }
     }
 
+    @SuppressLint("CheckResult")
     private fun startCalling(number: String) {
+        Log.d("call", "startCalling")
         currentPosition++
         TelephoneUtils.callPhone(number, this@PhoneActivity)
         Observable.just("").delay(8500, TimeUnit.MILLISECONDS)
                 .subscribe(Consumer {
+                    Log.d("call", "endCall")
                     TelephoneUtils.endCall(this@PhoneActivity)
                 })
     }
 
-    @SuppressLint("CheckResult")
+    @SuppressLint("CheckResult", "HardwareIds")
     private fun getPhoneNumber() {
-        rxPermissions?.request(Manifest.permission.READ_PHONE_STATE)?.subscribe {
+        rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
             if (it) {
                 val tm = BaseApplication.instance?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                tm.listen(object : PhoneStateListener() {
+                    override fun onCallStateChanged(state: Int, phoneNumber: String?) {
+                        Log.d("call", "state===$state  phoneNumber==$phoneNumber")
+                    }
+                }, 0x00020000)
                 try {
                     val tel = tm.line1Number //手机号码
                     val imei = tm.imei
@@ -76,7 +88,6 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
                     } else {
                         viewModel?.phoneNum = tel
                     }
-                    viewModel?.checkPhoneNumber(false)
                 } catch (e: Exception) {
                     Toast.makeText(this@PhoneActivity, "没有获取到本机号码 请在sim卡中设置", Toast.LENGTH_SHORT).show()
                 }
@@ -105,15 +116,16 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
 
     override fun initViewObservable() {
         viewModel!!.uc.phoneCall.observe(this, Observer {
-            rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
-                startCalling = true
-                currentPosition = 0
-            }
+            startCalling = true
+            currentPosition = 0
+            Log.d("call", "initViewObservable procressPhoneCall")
+            procressPhoneCall()
         })
         viewModel!!.uc.endPhoneCall.observe(this, Observer {
             startCalling = false
             Observable.just("").delay(3, TimeUnit.SECONDS)
                     .subscribe(Consumer {
+                        Log.d("call", "initViewObservable end phone call")
                         viewModel?.checkPhoneNumber(true)
                     })
         })

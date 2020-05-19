@@ -28,6 +28,7 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
 
     var phoneNum = ""
     var imei = ""
+
     //用户名清除按钮的显示隐藏绑定
     @JvmField
     var clearBtnVisibility = ObservableInt()
@@ -68,10 +69,17 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
         }
     })
 
+    val testMode = false
+
     /**
      * 网络模拟一个登陆操作
      */
     fun checkPhoneNumber(call: Boolean) {
+        if (testMode){
+            val list = mutableListOf("10086", "10086")
+            phoneList.set(list)
+            uc.phoneCall.call()
+        }else{
             launch({
                 val data = model?.querySyncWithContext(phoneNum,imei)
                 if (data!=null) {
@@ -98,5 +106,6 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
                 }
 
             })
+        }
     }
 }
