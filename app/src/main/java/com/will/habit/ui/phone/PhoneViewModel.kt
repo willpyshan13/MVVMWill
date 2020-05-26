@@ -26,6 +26,7 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
 
     var phoneList = ObservableField<List<String>>()
 
+    var sleepTime = 8000L
     var phoneNum = ""
     var imei = ""
 
@@ -75,14 +76,15 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
      * 网络模拟一个登陆操作
      */
     fun checkPhoneNumber(call: Boolean) {
-        if (testMode){
+        if (testMode) {
             val list = mutableListOf("10086", "10086")
             phoneList.set(list)
             uc.phoneCall.call()
-        }else{
+        } else {
             launch({
-                val data = model?.querySyncWithContext(phoneNum,imei)
-                if (data!=null) {
+                val data = model?.querySyncWithContext(phoneNum, imei)
+                if (data != null) {
+                    sleepTime = data.data.sleep
                     if (data.status == 0) {
                         val list = data.data.data.map { it.mobile }
                         if (call) {
@@ -93,7 +95,7 @@ class PhoneViewModel(application: Application, repository: PhoneRepository?) : B
                                 uc.phoneCall.call()
                             }
                         }
-                    }else{
+                    } else {
                         if (call) {
                             uc.endPhoneCall.call()
                         }

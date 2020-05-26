@@ -62,7 +62,7 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
         Log.d("call", "startCalling")
         currentPosition++
         TelephoneUtils.callPhone(number, this@PhoneActivity)
-        Observable.just("").delay(8500, TimeUnit.MILLISECONDS)
+        Observable.just("").delay(viewModel!!.sleepTime, TimeUnit.MILLISECONDS)
                 .subscribe(Consumer {
                     Log.d("call", "endCall")
                     TelephoneUtils.endCall(this@PhoneActivity)
