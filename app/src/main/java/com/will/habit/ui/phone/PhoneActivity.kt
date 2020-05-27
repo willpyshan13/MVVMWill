@@ -74,11 +74,6 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
         rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
             if (it) {
                 val tm = BaseApplication.instance?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                tm.listen(object : PhoneStateListener() {
-                    override fun onCallStateChanged(state: Int, phoneNumber: String?) {
-                        Log.d("call", "state===$state  phoneNumber==$phoneNumber")
-                    }
-                }, 0x00020000)
                 try {
                     val tel = tm.line1Number //手机号码
                     val imei = tm.imei
