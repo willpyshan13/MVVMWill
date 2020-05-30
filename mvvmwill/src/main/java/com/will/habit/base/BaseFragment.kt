@@ -38,18 +38,16 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFrag
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false)
-        return binding?.root
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         //解除Messenger注册
         Messenger.getDefault().unregister(viewModel)
-        if (viewModel != null) {
-            viewModel?.removeRxBus()
-        }
-        if (binding != null) {
-            binding?.unbind()
+        viewModel.removeRxBus()
+        if (::binding.isInitialized) {
+            binding.unbind()
         }
     }
 
@@ -64,7 +62,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFrag
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
         initViewObservable()
         //注册RxBus
-        viewModel!!.registerRxBus()
+        viewModel.registerRxBus()
     }
 
     /**
@@ -85,16 +83,16 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFrag
             viewModel = createViewModel(this, modelClass) as VM
         }
         this.viewModel = viewModel
-        binding!!.setVariable(viewModelId, viewModel)
+        binding.setVariable(viewModelId, viewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
-        binding!!.lifecycleOwner = this
+        binding.lifecycleOwner = this
         //让ViewModel拥有View的生命周期感应
-        viewModel?.let {
-            lifecycle.addObserver(viewModel!!)
+        this.viewModel.let {
+            lifecycle.addObserver(this.viewModel)
         }
 
         //注入RxLifecycle生命周期
-        viewModel!!.injectLifecycleProvider(this)
+        this.viewModel.injectLifecycleProvider(this)
     }
 
     /**
@@ -103,25 +101,25 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFrag
     //注册ViewModel与View的契约UI回调事件
     protected fun registorUIChangeLiveDataCallBack() {
         //加载对话框显示
-        viewModel!!.uC.showDialogEvent!!.observe(this, Observer { title -> showDialog(title) })
+        viewModel.uC.showDialogEvent!!.observe(this, Observer { title -> showDialog(title) })
         //加载对话框消失
-        viewModel!!.uC.dismissDialogEvent!!.observe(this, Observer { dismissDialog() })
+        viewModel.uC.dismissDialogEvent!!.observe(this, Observer { dismissDialog() })
         //跳入新页面
-        viewModel!!.uC.startActivityEvent!!.observe(this, Observer {
+        viewModel.uC.startActivityEvent!!.observe(this, Observer {
             val clz = it!![ParameterField.CLASS] as Class<*>?
             val bundle = it[ParameterField.BUNDLE] as Bundle?
             startActivity(clz, bundle)
         })
         //跳入ContainerActivity
-        viewModel!!.uC.startContainerActivityEvent!!.observe(this, Observer {
+        viewModel.uC.startContainerActivityEvent!!.observe(this, Observer {
             val canonicalName = it!![ParameterField.CANONICAL_NAME] as String?
             val bundle = it[ParameterField.BUNDLE] as Bundle?
             startContainerActivity(canonicalName, bundle)
         })
         //关闭界面
-        viewModel!!.uC.finishEvent!!.observe(this, Observer { activity!!.finish() })
+        viewModel.uC.finishEvent!!.observe(this, Observer { activity!!.finish() })
         //关闭上一层
-        viewModel!!.uC.onBackPressedEvent!!.observe(this, Observer { activity!!.onBackPressed() })
+        viewModel.uC.onBackPressedEvent!!.observe(this, Observer { activity!!.onBackPressed() })
     }
 
     fun showDialog(title: String?) {
@@ -188,8 +186,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFrag
      */
     //刷新布局
     fun refreshLayout() {
-        if (viewModel != null) {
-            binding!!.setVariable(viewModelId, viewModel)
+        if (::binding.isInitialized) {
+            binding.setVariable(viewModelId, viewModel)
         }
     }
 
