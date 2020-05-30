@@ -2,7 +2,6 @@ package com.will.habit.base
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity
@@ -12,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.will.habit.base.BaseViewModel.ParameterField
-import com.will.habit.base.ContainerActivity
 import com.will.habit.bus.Messenger
 import com.will.habit.utils.MaterialDialogUtils
 import java.lang.reflect.ParameterizedType
@@ -38,18 +36,16 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : RxAppC
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
         initViewObservable()
         //注册RxBus
-        viewModel!!.registerRxBus()
+        viewModel.registerRxBus()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         //解除Messenger注册
         Messenger.getDefault().unregister(viewModel)
-        if (viewModel != null) {
-            viewModel?.removeRxBus()
-        }
-        if (binding != null) {
-            binding?.unbind()
+        viewModel.removeRxBus()
+        if (::binding.isInitialized) {
+            binding.unbind()
         }
     }
 
@@ -64,32 +60,30 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : RxAppC
         if (viewModel == null) {
             val modelClass: Class<BaseViewModel<*>>
             val type = javaClass.genericSuperclass
-            modelClass = if (type is ParameterizedType){
+            modelClass = if (type is ParameterizedType) {
                 type.actualTypeArguments[1] as Class<BaseViewModel<*>>
-            }else{
+            } else {
                 BaseViewModel::class.java
             }
-            viewModel = createViewModel(this, modelClass ) as VM
+            viewModel = createViewModel(this, modelClass) as VM
         }
         this.viewModel = viewModel
         //关联ViewModel
-        binding?.setVariable(viewModelId, viewModel)
+        binding.setVariable(viewModelId, viewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
-        binding?.lifecycleOwner = this
+        binding.lifecycleOwner = this
         //让ViewModel拥有View的生命周期感应
-        viewModel?.let {
-            lifecycle.addObserver(viewModel!!)
+        this.viewModel.let {
+            lifecycle.addObserver(this.viewModel)
         }
 
         //注入RxLifecycle生命周期
-        viewModel!!.injectLifecycleProvider(this)
+        this.viewModel.injectLifecycleProvider(this)
     }
 
     //刷新布局
     fun refreshLayout() {
-        if (viewModel != null) {
-            binding!!.setVariable(viewModelId, viewModel)
-        }
+        binding.setVariable(viewModelId, viewModel)
     }
 
     /**
@@ -98,25 +92,25 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : RxAppC
     //注册ViewModel与View的契约UI回调事件
     protected fun registorUIChangeLiveDataCallBack() {
         //加载对话框显示
-        viewModel!!.uC.showDialogEvent!!.observe(this, Observer { title -> showDialog(title) })
+        viewModel.uC.showDialogEvent!!.observe(this, Observer { title -> showDialog(title) })
         //加载对话框消失
-        viewModel!!.uC.dismissDialogEvent!!.observe(this, Observer { dismissDialog() })
+        viewModel.uC.dismissDialogEvent!!.observe(this, Observer { dismissDialog() })
         //跳入新页面
-        viewModel!!.uC.startActivityEvent!!.observe(this, Observer {
+        viewModel.uC.startActivityEvent!!.observe(this, Observer {
             val clz = it!![ParameterField.CLASS] as Class<*>?
             val bundle = it[ParameterField.BUNDLE] as Bundle?
             startActivity(clz, bundle)
         })
         //跳入ContainerActivity
-        viewModel!!.uC.startContainerActivityEvent!!.observe(this, Observer {
+        viewModel.uC.startContainerActivityEvent!!.observe(this, Observer {
             val canonicalName = it!![ParameterField.CANONICAL_NAME] as String?
             val bundle = it[ParameterField.BUNDLE] as Bundle?
             startContainerActivity(canonicalName, bundle)
         })
         //关闭界面
-        viewModel!!.uC.finishEvent!!.observe(this, Observer { finish() })
+        viewModel.uC.finishEvent!!.observe(this, Observer { finish() })
         //关闭上一层
-        viewModel!!.uC.onBackPressedEvent!!.observe(this, Observer { onBackPressed() })
+        viewModel.uC.onBackPressedEvent!!.observe(this, Observer { onBackPressed() })
     }
 
     fun showDialog(title: String?) {
