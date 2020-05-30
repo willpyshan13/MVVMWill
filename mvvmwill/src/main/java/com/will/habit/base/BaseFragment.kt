@@ -23,10 +23,8 @@ import java.lang.reflect.ParameterizedType
  * @author will
  */
 abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFragment(), IBaseView {
-    @JvmField
-    protected var binding: V? = null
-    @JvmField
-    protected var viewModel: VM? = null
+    protected lateinit var binding: V
+    protected lateinit var viewModel: VM
     private var viewModelId = 0
     private var dialog: MaterialDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +72,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFrag
      */
     private fun initViewDataBinding() {
         viewModelId = initVariableId()
-        viewModel = initViewModel()
+        var viewModel = initViewModel()
         if (viewModel == null) {
             val modelClass: Class<BaseViewModel<*>>
             val type = javaClass.genericSuperclass
@@ -86,6 +84,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : RxFrag
             }
             viewModel = createViewModel(this, modelClass) as VM
         }
+        this.viewModel = viewModel
         binding!!.setVariable(viewModelId, viewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
         binding!!.lifecycleOwner = this

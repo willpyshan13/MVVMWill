@@ -21,10 +21,8 @@ import java.lang.reflect.ParameterizedType
  * @author will
  */
 abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : RxAppCompatActivity(), IBaseView {
-    @JvmField
-    protected var binding: V? = null
-    @JvmField
-    protected var viewModel: VM? = null
+    protected lateinit var binding: V
+    protected lateinit var viewModel: VM
     private var viewModelId = 0
     private var dialog: MaterialDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +60,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : RxAppC
         //DataBindingUtil类需要在project的build中配置 dataBinding {enabled true }, 同步后会自动关联android.databinding包
         binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState))
         viewModelId = initVariableId()
-        viewModel = initViewModel()
+        var viewModel = initViewModel()
         if (viewModel == null) {
             val modelClass: Class<BaseViewModel<*>>
             val type = javaClass.genericSuperclass
@@ -73,6 +71,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : RxAppC
             }
             viewModel = createViewModel(this, modelClass ) as VM
         }
+        this.viewModel = viewModel
         //关联ViewModel
         binding?.setVariable(viewModelId, viewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
