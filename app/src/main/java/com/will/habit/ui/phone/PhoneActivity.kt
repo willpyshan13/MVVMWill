@@ -71,7 +71,7 @@ class PhoneActivity : BaseActivity<ActivityPhoneBinding, PhoneViewModel>() {
 
     @SuppressLint("CheckResult", "HardwareIds")
     private fun getPhoneNumber() {
-        rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.MODIFY_PHONE_STATE)?.subscribe {
+        rxPermissions?.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE)?.subscribe {
             if (it) {
                 val tm = BaseApplication.instance?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                 try {
