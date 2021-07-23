@@ -353,9 +353,9 @@ class ToastUtils private constructor() {
             }
             val view = sToast!!.view
             if (bgResource != -1) {
-                view.setBackgroundResource(bgResource)
+                view?.setBackgroundResource(bgResource)
             } else if (backgroundColor != DEFAULT_COLOR) {
-                view.setBackgroundColor(backgroundColor)
+                view?.setBackgroundColor(backgroundColor)
             }
             sToast!!.setGravity(gravity, xOffset, yOffset)
             sToast!!.show()

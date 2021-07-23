@@ -106,21 +106,6 @@ object NetworkUtil {
     }
 
     /**
-     * check is3G
-     * @param context
-     * @return boolean
-     */
-    fun is3G(context: Context): Boolean {
-        val connectivityManager = context
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetInfo = connectivityManager.activeNetworkInfo
-        return if (activeNetInfo != null
-                && activeNetInfo.type == ConnectivityManager.TYPE_MOBILE) {
-            true
-        } else false
-    }
-
-    /**
      * isWifi
      * @param context
      * @return boolean
@@ -149,18 +134,5 @@ object NetworkUtil {
                         .subtype == TelephonyManager.NETWORK_TYPE_CDMA)) {
             true
         } else false
-    }
-
-    /**
-     * is wifi on
-     */
-    fun isWifiEnabled(context: Context): Boolean {
-        val mgrConn = context
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val mgrTel = context
-                .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        return mgrConn.activeNetworkInfo != null && mgrConn
-                .activeNetworkInfo.state == NetworkInfo.State.CONNECTED || mgrTel
-                .networkType == TelephonyManager.NETWORK_TYPE_UMTS
     }
 }

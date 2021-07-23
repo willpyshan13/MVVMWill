@@ -228,7 +228,7 @@ object CustomActivityOnCrash {
      * @param intent The Intent. Must not be null.
      * @return The stacktrace, or null if not provided.
      */
-    fun getStackTraceFromIntent(intent: Intent): String {
+    fun getStackTraceFromIntent(intent: Intent): String? {
         return intent.getStringExtra(EXTRA_STACK_TRACE)
     }
 

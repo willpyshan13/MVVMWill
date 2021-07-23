@@ -1,8 +1,8 @@
 ext {
     //android开发版本配置
     android = [
-            compileSdkVersion: 29,
-            buildToolsVersion: "29.0.3",
+            compileSdkVersion: 30,
+            buildToolsVersion: "30.0.3",
             applicationId    : "com.will",
             minSdkVersion    : 16,
             targetSdkVersion : 29,
@@ -59,9 +59,6 @@ ext {
             "lifecycle-compiler"                   : "androidx.lifecycle:lifecycle-compiler:2.0.0",
 
             "smart-refresh"                        : "com.scwang.smart:refresh-layout-kernel:2.0.0",
-
-            //MVVMHabit
-            "MVVMHabit"                            : "com.github.goldze:MVVMHabit:3.1.3",
     ]
 }
 

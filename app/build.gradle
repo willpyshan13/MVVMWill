@@ -43,9 +43,7 @@ dependencies {
     implementation('me.majiajie:pager-bottom-tab-strip:2.2.5') {
         exclude group: 'com.android.support'
     }
-    //MVVMHabit
     implementation project(':mvvmwill')
-//    implementation rootProject.ext.dependencies.MVVMHabit
     //内存泄漏测试
     compile 'com.android.support:multidex:1.0.3'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
