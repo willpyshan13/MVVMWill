@@ -26,16 +26,16 @@
 
 #------------------------------------------主项目混淆规则----------------------------------------------
 #实体类不参与混淆
--keep class com.goldze.mvvmhabit.entity.** { *; }
+-keep class com.will.mvvm.entity.** { *; }
 
 #tkrefreshlayout
 -keep class com.lcodecore.tkrefreshlayout.** { *; }
 -dontwarn com.lcodecore.tkrefreshlayout.**
 
-#-------------------------------------------MVVMHabit混淆规则----------------------------------------------
+#-------------------------------------------MVVMWill混淆规则----------------------------------------------
 #---------------------------------1.实体类---------------------------------
 
--keep class com.will.habit.http.BaseResponse { *; }
+-keep class com.will.mvvm.http.BaseResponse { *; }
 
 #-------------------------------------------------------------------------
 
@@ -90,31 +90,7 @@
 -dontwarn okhttp3.**
 -dontwarn okio.**
 
-#RxJava RxAndroid
--dontwarn rx.*
 -dontwarn sun.misc.**
-
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-   long producerIndex;
-   long consumerIndex;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
-}
-
-#RxLifecycle
--keep class com.trello.rxlifecycle2.** { *; }
--keep interface com.trello.rxlifecycle2.** { *; }
--dontwarn com.trello.rxlifecycle2.**
-
-#RxPermissions
--keep class com.tbruyelle.rxpermissions2.** { *; }
--keep interface com.tbruyelle.rxpermissions2.** { *; }
 
 #material-dialogs
 -keep class com.afollestad.materialdialogs.** { *; }
@@ -134,17 +110,17 @@
 #----------------------------------------------------------------------------
 
 #---------------------------------4.反射相关的类和方法-----------------------
--keep public class * extends com.will.habit.base.BaseActivity{ *; }
--keep public class * extends com.will.habit.base.BaseFragment{ *; }
--keep public class * extends com.will.habit.binding.command.BindingCommand{ *; }
--keep public class * extends com.will.habit.binding.command.ResponseCommand{ *; }
+-keep public class * extends com.will.mvvm.base.BaseActivity{ *; }
+-keep public class * extends com.will.mvvm.base.BaseFragment{ *; }
+-keep public class * extends com.will.mvvm.binding.command.BindingCommand{ *; }
+-keep public class * extends com.will.mvvm.binding.command.ResponseCommand{ *; }
 
 
 #----------------------------------------------------------------------------
 
 #---------------------------------5.自定义控件------------------------------
 
--keep class com.will.habit.widget.widget.** { *; }
+-keep class com.will.mvvm.widget.widget.** { *; }
 
 #----------------------------------------------------------------------------
 #---------------------------------6.其他定制区-------------------------------

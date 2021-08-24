@@ -7,8 +7,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
     }
     dataBinding {
         enabled true
@@ -27,29 +25,10 @@ dependencies {
     api rootProject.ext.support["support-v4"]
     api rootProject.ext.support["appcompat-v7"]
     api rootProject.ext.support["recyclerview-v7"]
-    //rxjava
-    api rootProject.ext.dependencies.rxjava
-    api rootProject.ext.dependencies.rxandroid
-    //rx管理View的生命周期
-    api(rootProject.ext.dependencies.rxlifecycle) {
-        exclude group: 'com.android.support'
-    }
-    api(rootProject.ext.dependencies["rxlifecycle-components"]) {
-        exclude group: 'com.android.support'
-    }
-    //rxbinding
-    api(rootProject.ext.dependencies.rxbinding) {
-        exclude group: 'com.android.support'
-    }
-    //rx权限请求
-    api(rootProject.ext.dependencies.rxpermissions) {
-        exclude group: 'com.android.support'
-    }
     //network
     api rootProject.ext.dependencies.okhttp
     api rootProject.ext.dependencies.retrofit
     api rootProject.ext.dependencies["converter-gson"]
-    api rootProject.ext.dependencies["adapter-rxjava"]
     //json解析
     api rootProject.ext.dependencies.gson
     //material-dialogs
@@ -71,6 +50,7 @@ dependencies {
     api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
         exclude group: 'com.android.support'
     }
+    api rootProject.ext.support["constraint-layout"]
     //Google LiveData和ViewModel组件
     api rootProject.ext.dependencies["lifecycle-extensions"]
     api rootProject.ext.dependencies["smart-refresh"]

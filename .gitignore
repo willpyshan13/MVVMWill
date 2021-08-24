@@ -10,4 +10,4 @@ key.jks
 /captures
 .externalNativeBuild
 /app/release
-/mvvmhabit/bintray.gradle
+/mvvmwill/bintray.gradle

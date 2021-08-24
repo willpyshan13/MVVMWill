@@ -1,21 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="me.goldze.mvvmhabit">
+    package="com.will.mvvm.base">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application>
         <activity
-            android:name="com.will.habit.base.base.ContainerActivity"
+            android:name="com.will.mvvm.base.ContainerActivity"
             android:configChanges="orientation|keyboardHidden"></activity>
-        <activity
-            android:name="com.will.habit.crash.DefaultErrorActivity"
-            android:process=":error_activity" />
 
-        <provider
-            android:name="com.will.habit.crash.CaocInitProvider"
-            android:authorities="${applicationId}.customactivityoncrashinitprovider"
-            android:exported="false"
-            android:initOrder="101" />
     </application>
 
 </manifest>
