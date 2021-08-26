@@ -15,12 +15,23 @@
         android:background="@color/white">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login"
             android:layout_width="wrap_content"
             binding:layout_constraintTop_toTopOf="parent"
             binding:layout_constraintStart_toStartOf="parent"
             binding:layout_constraintEnd_toEndOf="parent"
-            android:text="edittext test"
+            android:text="@={viewModel.userName}"
             binding:onClickCommand="@{viewModel.edittextClick}"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/username"
+            binding:layout_constraintTop_toBottomOf="@+id/login"
+            binding:layout_constraintStart_toStartOf="parent"
+            binding:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:text="@={viewModel.userName}"
+            binding:textChanged="@{viewModel.textChange}"
             android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
